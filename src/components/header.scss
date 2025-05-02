@@ -1,0 +1,19 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 1rem;
+
+    h1 {
+        margin: 0;
+        padding: 1rem 0;
+    }
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 3rem;
+        margin: auto 0;
+        background-color: green;
+    }
+}

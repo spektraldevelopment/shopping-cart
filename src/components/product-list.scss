@@ -1,0 +1,38 @@
+.product-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    .product-item {
+        margin: 1rem;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        background-color: #8d8d8d;
+
+        &__name-price {
+            display: flex;
+            justify-content: space-between;
+
+        }
+
+        img {
+            width: auto;
+        }
+
+        h3, p {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        p {
+            padding-left: 1rem;
+        }
+    }
+
+    button {
+       display: flex;
+       margin-top: 1rem;
+    }
+}

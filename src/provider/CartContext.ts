@@ -1,10 +1,10 @@
 import { createContext } from "react";
-
-export type Product = { id: number; name: string; price: number };
-export type CartItem = Product & { quantity: number };
+import { CartItem, Product } from "../types/types";
 
 export const CartContext = createContext<{
     cart: CartItem[];
+    cartOpen: boolean;
+    toggleCart: () => void;
     addToCart: (item: Product) => void;
     removeFromCart: (item: Product ) => void;
     checkout: () => void;
