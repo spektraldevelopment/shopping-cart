@@ -6,7 +6,7 @@ import { CartContext } from "./CartContext";
 const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const [cart, setCart] = useState<CartItem[]>([]);
-    const [cartOpen, setCartOpen] = useState<boolean>(false);
+    const [cartOpen, setCartOpen] = useState<boolean>(true);
 
     useEffect(() => {
         const loadCart = async () => {
@@ -37,12 +37,13 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
         try {
 
-            const { id, name, price } = item;
+            const { id, name, price, pic } = item;
 
             await axios.post("http://localhost:3333/api/cart", {
                 id,
                 name,
                 price,
+                pic,
                 quantity: 1
             });
 
@@ -51,8 +52,40 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         }
     }
 
-    const removeFromCart = (item: Product) => {
-        console.log("Remove from cart: ", item)
+    const removeFromCart = async (item: Product) => {
+        const existing = cart.find(i => i.id === item.id);
+
+        let updatedCart: CartItem[] = [];
+
+        if (existing) {
+            updatedCart = cart
+                .map(i => i.id === item.id ? { ...i, quantity: i.quantity - 1 } : i)
+                .filter(i => i.quantity > 0); // Remove items with quantity <= 0
+        } else {
+            updatedCart = [...cart];
+        }
+
+        setCart(updatedCart);
+
+        try {
+            await axios.patch(`http://localhost:3333/api/cart/${item.id}`, {
+                id: item.id,
+                quantity: -1
+            });
+        } catch (err) {
+            console.error("Failed to update cart on server: ", err)
+        }
+    }
+
+    const deleteFromCart = async (item: Product) => {
+        const updatedCart = cart.filter(i => i.id !== item.id);
+        setCart(updatedCart);
+
+        try {
+            await axios.delete(`http://localhost:3333/api/cart/${item.id}`);
+        } catch (err) {
+            console.error("Failed to delete item from server: ", err)
+        }
     }
 
     const checkout = () => {
@@ -60,7 +93,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }
 
     return (
-        <CartContext.Provider value={{ cart, cartOpen, toggleCart, addToCart, removeFromCart, checkout }}>
+        <CartContext.Provider value={{ cart, cartOpen, toggleCart, addToCart, removeFromCart, deleteFromCart, checkout }}>
             {children}
         </CartContext.Provider>
     );

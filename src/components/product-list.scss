@@ -1,11 +1,23 @@
+@use "./../styles/mixins" as *;
+
 .product-list {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     list-style-type: none;
     margin: 0;
     padding: 0;
 
+    @include tablet {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @include desktop {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
     .product-item {
+        justify-self: center;
+        max-width: 300px;
         margin: 1rem;
         padding: 1rem;
         border: 1px solid #ccc;

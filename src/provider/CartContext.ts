@@ -7,5 +7,6 @@ export const CartContext = createContext<{
     toggleCart: () => void;
     addToCart: (item: Product) => void;
     removeFromCart: (item: Product ) => void;
+    deleteFromCart: (item: Product) => void;
     checkout: () => void;
 } | null>(null);

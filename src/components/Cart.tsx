@@ -3,7 +3,7 @@ import { useCart } from "../provider/useCart";
 
 const Cart: React.FC = () => {
 
-    const { cart, toggleCart, cartOpen } = useCart();
+    const { cart, toggleCart, cartOpen, addToCart, removeFromCart, deleteFromCart } = useCart();
 
     return(
         <div className={cartOpen ? "cart cart--active" : "cart"}>
@@ -11,13 +11,22 @@ const Cart: React.FC = () => {
                 <h2>My Cart</h2>
                 <button onClick={toggleCart}>Close</button>
             </div>
-            <ul>
+            <ul className="cart-list">
                 {cart.map(product => (
-                    <li key={product.id}>
-                        <h3>{product.name}</h3>
-                        <p>${product.price}</p>
+                    <li key={product.id} className="cart-list__item">
+                        <div className="cart-list__item--header">
+                            <h3>{product.name}</h3>
+                            <p>${product.price}</p>    
+                        </div>
                         <img src={product.pic}/>
-                        <p>Quantity: {product.quantity}</p>
+                        <div>
+                            <p>Quantity: {product.quantity}</p>
+                            <div className="cart-list__buttons">
+                                <button onClick={() => addToCart(product)}>+</button>
+                                <button onClick={() => removeFromCart(product)}>-</button>
+                                <button onClick={() => deleteFromCart(product)}>Delete</button>
+                            </div>
+                        </div>
                     </li>
                 ))}
             </ul>
