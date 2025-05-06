@@ -21,7 +21,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 // Fallback to local storage if server fails
                 const saved = localStorage.getItem(CART_STORAGE_KEY);
                 if (saved) {
-                  setCart(JSON.parse(saved));
+                    setCart(JSON.parse(saved));
                 }
             }
         }
@@ -33,7 +33,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     const persistCart = (updatedCart: CartItem[]) => {
         setCart(updatedCart);
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
-      };
+    };
 
     const addToCart = async (item: Product) => {
         const existing = cart.find(i => i.id === item.id);

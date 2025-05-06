@@ -1,5 +1,5 @@
 import "./header.scss";
-import { useCart } from  "../provider/useCart";
+import { useCart } from "../provider/useCart";
 import { stopScroll } from "../utils/utils";
 
 const Header: React.FC = () => {
@@ -11,7 +11,7 @@ const Header: React.FC = () => {
         stopScroll();
     }
 
-    return(
+    return (
         <header>
             <h1>My Store</h1>
             <button onClick={onToggleCart}>Cart</button>
