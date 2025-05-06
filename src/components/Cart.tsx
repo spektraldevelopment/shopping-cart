@@ -1,15 +1,21 @@
 import "./cart.scss";
 import { useCart } from "../provider/useCart";
+import { resumeScroll } from "../utils/utils";
 
 const Cart: React.FC = () => {
 
     const { cart, toggleCart, cartOpen, addToCart, removeFromCart, deleteFromCart } = useCart();
 
+    const onToggleCart = () => {
+        toggleCart();
+        resumeScroll();
+    }
+
     return(
         <div className={cartOpen ? "cart cart--active" : "cart"}>
             <div className="cart__header">
                 <h2>My Cart</h2>
-                <button onClick={toggleCart}>Close</button>
+                <button onClick={onToggleCart}>Close</button>
             </div>
             <ul className="cart-list">
                 {cart.map(product => (

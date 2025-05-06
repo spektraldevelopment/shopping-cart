@@ -9,7 +9,30 @@ const ProductList = () => {
     const { addToCart } = useCart();
 
     useEffect(() => {
-        axios.get("http://localhost:3333/api/products").then(res => setProducts(res.data));
+
+        console.log("Fetching products from server...");
+
+        axios.get("http://localhost:3333/api/products").then(res => {
+
+            setProducts(res.data);
+            // Set products in local storage
+            localStorage.setItem("products", JSON.stringify(res.data));
+
+            console.log("Products fetched from server");
+        }).catch(err => {
+
+            // Fallback to local storage if server fails
+            const saved = localStorage.getItem("products");
+            if (saved) {
+                setProducts(JSON.parse(saved));
+                console.log("Products loaded from local storage");
+            } else {
+                console.error("Failed to load products from server and local storage is empty", err);
+            }
+
+            console.error("Failed to fetch products from server", err);
+        });
+
     }, []);
 
     return (

@@ -3,10 +3,12 @@ import React, { useState, useEffect } from "react";
 import { CartItem, Product } from "../types/types";
 import { CartContext } from "./CartContext";
 
+const CART_STORAGE_KEY = "shopping_cart";
+
 const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
     const [cart, setCart] = useState<CartItem[]>([]);
-    const [cartOpen, setCartOpen] = useState<boolean>(true);
+    const [cartOpen, setCartOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const loadCart = async () => {
@@ -14,13 +16,24 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
                 const res = await axios.get<CartItem[]>("http://localhost:3333/api/cart");
                 setCart(res.data);
             } catch (err) {
-                console.error("Failed to load cart from server", err)
+                console.error("Failed to load cart from server", err);
+
+                // Fallback to local storage if server fails
+                const saved = localStorage.getItem(CART_STORAGE_KEY);
+                if (saved) {
+                  setCart(JSON.parse(saved));
+                }
             }
         }
         loadCart();
     }, []);
 
     const toggleCart = () => setCartOpen(prev => !prev);
+
+    const persistCart = (updatedCart: CartItem[]) => {
+        setCart(updatedCart);
+        localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(updatedCart));
+      };
 
     const addToCart = async (item: Product) => {
         const existing = cart.find(i => i.id === item.id);
@@ -33,7 +46,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             updatedCart = [...cart, { ...item, quantity: 1 }];
         }
 
-        setCart(updatedCart);
+        persistCart(updatedCart);
 
         try {
 
@@ -65,7 +78,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
             updatedCart = [...cart];
         }
 
-        setCart(updatedCart);
+        persistCart(updatedCart);
 
         try {
             await axios.patch(`http://localhost:3333/api/cart/${item.id}`, {
@@ -79,7 +92,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 
     const deleteFromCart = async (item: Product) => {
         const updatedCart = cart.filter(i => i.id !== item.id);
-        setCart(updatedCart);
+        persistCart(updatedCart);
 
         try {
             await axios.delete(`http://localhost:3333/api/cart/${item.id}`);
