@@ -31,7 +31,6 @@ const Cart: React.FC = () => {
         let totalAmount = 0;
 
         for (const product of cart) {
-            console.log("product: ", product)
             const { price, quantity } = product;
             totalAmount += quantity * price;
         }

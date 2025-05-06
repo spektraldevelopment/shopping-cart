@@ -30,6 +30,18 @@
 
         }
 
+        &__pic {
+            width: 300px;
+            height: 200px;
+
+            &--loading {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100%;
+            }
+        }
+
         img {
             width: auto;
         }

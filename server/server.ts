@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/products", (req, res) => {
     res.json([
-        { id: 1, name: "Shoe", price: 50, pic: "https://picsum.photos/seed/1/300/200" },
+        { id: 1, name: "Shoes", price: 50, pic: "https://picsum.photos/seed/1/300/200" },
         { id: 2, name: "Hat", price: 20, pic: "https://picsum.photos/seed/2/300/200" },
         { id: 3, name: "Jacket", price: 75, pic: "https://picsum.photos/seed/3/300/200" }
     ]);

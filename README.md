@@ -1,4 +1,4 @@
-# Shopping Cart
+# Shopping Cart POC
 
 This is a basic shopping cart POC done in React/Typescript on the Front End and using Node/Express for the Back End. The POC features a localStorage fallback in case the server can't be reached for some reason.
 
@@ -23,3 +23,5 @@ followed by
 `npm run dev`
 
 > Note: You need to run the server at least once in order to set the localStorage object.
+
+> Note: This a POC, in production we would want to minimize how many calls go to the backend.
