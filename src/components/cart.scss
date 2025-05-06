@@ -41,6 +41,13 @@
         }
     }
 
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
     @keyframes slide-in {
         from {
             left: 100%;
@@ -56,8 +63,6 @@
         grid-template-columns: 1fr;
         list-style-type: none;
         padding: 0;
-        max-height: 80vh;
-        overflow-y: auto;
 
         @include tablet {
             grid-template-columns: 1fr 1fr;
@@ -98,6 +103,37 @@
 
         button {
             border: 1px solid #ccc;
+        }
+    }
+
+    .cart-total {
+
+        margin: 1rem;
+
+        &__list {
+            list-style-type: none;
+            padding: 0;
+
+            &--item {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #cecece;
+            }
+
+            div:last-child {
+                font-weight: bold;
+                text-align: right;
+            }
+        }
+
+        &__amount {
+            text-align: right;
+
+            span {
+                font-weight: bold;
+            }
         }
     }
 }
