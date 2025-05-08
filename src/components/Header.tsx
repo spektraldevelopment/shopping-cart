@@ -1,10 +1,10 @@
 import "./header.scss";
-import { useCart } from "../provider/useCart";
+import useCartStore from "../store/CartStore";
 import { stopScroll } from "../utils/utils";
 
 const Header: React.FC = () => {
 
-    const { toggleCart } = useCart();
+    const toggleCart = useCartStore((state) => state.toggleCart);
 
     const onToggleCart = () => {
         toggleCart();

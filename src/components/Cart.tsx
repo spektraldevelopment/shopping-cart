@@ -1,11 +1,16 @@
 import "./cart.scss";
+import useCartStore from "../store/CartStore";
 import { CartItem } from "../types/types";
-import { useCart } from "../provider/useCart";
 import { resumeScroll } from "../utils/utils";
 
 const Cart: React.FC = () => {
 
-    const { cart, toggleCart, cartOpen, addToCart, removeFromCart, deleteFromCart } = useCart();
+    const cart = useCartStore((state) => state.cart);
+    const toggleCart = useCartStore((state) => state.toggleCart);
+    const cartOpen = useCartStore((state) => state.cartOpen);
+    const addToCart = useCartStore((state) => state.addToCart);
+    const removeFromCart = useCartStore((state) => state.removeFromCart);
+    const deleteFromCart = useCartStore((state) => state.deleteFromCart);
 
     const onToggleCart = () => {
         toggleCart();

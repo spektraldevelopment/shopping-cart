@@ -1,6 +1,6 @@
 import { useEffect, useState, CSSProperties } from "react";
 import axios from "axios";
-import { useCart } from "../provider/useCart";
+import useCartStore from "../store/CartStore";
 import { Product } from "../types/types";
 import { cacheImages } from "../utils/utils";
 import { PulseLoader } from "react-spinners";
@@ -13,7 +13,8 @@ const spinnerOverride: CSSProperties = {
 const ProductList = () => {
     const [isLoading, setIsLoading] = useState(true);   
     const [products, setProducts] = useState<Product[]>([]);
-    const { addToCart } = useCart();
+
+    const addToCart = useCartStore((state) => state.addToCart);
 
     useEffect(() => {
 
